@@ -145,6 +145,40 @@ Map::~Map()
 			 }
 		 }
 	 }
+	 //draw tanks
+	 for ( size_t i = 0; i < 5; i++ )
+	 {    
+		 Tank tank = Tank( Point(), '%' ); bool hasWall, hasTank;
+		 do {
+			 hasWall = false;
+			 hasTank = false;
+			 tank.position.X = rand() % ( width.X - 1 );
+			 tank.position.Y = rand() % ( height.X - 4 );
+			 //check has the wall
+			 if ( tank.position.getChar() == '#' ) {
+				 hasWall = true;
+			 }
+			 //check has near tank
+			 for ( size_t k = tank.position.Y - 2; k < tank.position.Y + 2; k++ )
+			 {
+				 for ( size_t q = tank.position.X - 2; q < tank.position.X + 2; q++ )
+				 {
+					 if ( height.Y >= k || height.X <= k || width.Y >= q || width.X <= q )
+					 {
+						 continue;
+					 }
+					 else if ( Point( k, q ).getChar() == tank.sign ) {
+						 hasTank = true;
+					 }
+				 }
+
+			 }
+
+		 } while ( hasTank || hasWall || tank.position.X <= width.Y || tank.position.Y <= height.Y );
+		
+		 tanks.push_back( tank );
+		 tank.position.setChar( tank.sign );
+	 }
 	 
 }
  void Map::update()
