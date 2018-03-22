@@ -28,12 +28,12 @@ Map::~Map()
 		 {
 			 if ( i == height.Y || i == height.X - 1 )
 			 {
-				 Point( i, k ).setChar( border );
+				 Point( i, k ).setChar( '-' );
 			 }
 			 else
 				 if ( k == width.Y && i != height.Y || k == width.X - 1 && i != height.X - 1 )
 				 {
-					 Point( i, k ).setChar( border );
+					 Point( i, k ).setChar( '|' );
 				 }
 				 else
 				 {
@@ -67,7 +67,7 @@ Map::~Map()
 	 //draw tank of player
 	 player.position.setChar( player.sign );
 	 //draw walls
-	 for ( int i = 0; i < 5 * 10; i++ )
+	 for ( int i = 0; i < 5 * 3; i++ )
 	 {
 		 Point points;
 		 do
@@ -181,6 +181,14 @@ Map::~Map()
 	 }
 	 
 }
- void Map::update()
+ void Map::update( Player& player, Point last_pos )
 {
+	 last_pos.setChar( ' ' );
+	 player.position.setChar( player.sign );
 }
+ void Map::update( Wall& wall, Point last_pos )
+ {
+ }
+ void Map::update( Tank& tank, Point last_pos )
+ {
+ }

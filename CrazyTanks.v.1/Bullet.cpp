@@ -7,13 +7,19 @@ Bullet::Bullet()
 	position = Point();
 }
 
-Bullet::Bullet( Point position, char sign, Direction dir ) : position( position ), sign( sign ), dir( dir ) {
+Bullet::Bullet( Point position, char sign, Direction dir, char type ) : position( position ), sign( sign ), dir( dir ), type( type )
+{
 
 }
 Bullet::~Bullet(){}
-void Bullet::move() {
-
+bool Bullet::isBlock()
+{
+	return ( position.getChar() == '-' || position.getChar() == type || position.getChar() == '|' );
 }
-void Bullet::destroy() {
+void Bullet::move() 
+{
+}
+void Bullet::destroy() 
+{
 
 }

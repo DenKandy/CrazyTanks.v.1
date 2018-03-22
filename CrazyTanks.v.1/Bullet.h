@@ -7,13 +7,14 @@
 class Bullet {
 public:
 	char sign;
+	char type;
 	Direction dir;
 	Point position;
 
 	Bullet();
-	Bullet( Point position, char sign, Direction dir );
+	Bullet( Point position, char sign, Direction dir, char type );
 	~Bullet();
-	
+	bool isBlock();
 	void move();
 	void destroy();
 

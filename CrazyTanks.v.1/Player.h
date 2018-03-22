@@ -3,6 +3,7 @@
 #define PLAYER_H
 
 #include "Point.h"
+#include "Bullet.h"
 
 class Player
 {
@@ -13,10 +14,14 @@ public:
 	int health;
 
 	Player();
-	Player(Point position, char sign, int health);
+	Player( Point position, char sign, int health );
 	~Player();
-	void move();
-	void destroy();
+	void move( Player& player );
+	bool canMove( Direction dir );
+	void damage();
+	Bullet shoot();
+private:
+	bool isBlock(Point pos);
 
 };
 #endif //PLAYER_H

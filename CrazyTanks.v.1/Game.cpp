@@ -22,6 +22,18 @@ void Game::start()
 	//draw map
 	srand( time( 0 ) );
 	map.draw();
+	while ( true )
+	{
+		auto last_pos_player = map.player.position;
+		map.player.move( map.player );
+		
+		if ( !( map.player.position == last_pos_player ) ) 
+		{
+			map.update( map.player, last_pos_player );
+		}
+
+	}
+
 }
 
 void Game::finish()

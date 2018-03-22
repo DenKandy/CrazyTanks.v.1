@@ -28,7 +28,10 @@ public:
 	Map( Point height, Point width );
 	~Map();
 	void draw();
-	void update();
+	void update( Player& player, Point last_pos );
+	void update( Tank& tank, Point last_pos );
+	void update( Wall& wall, Point last_pos );
+
 
 private:
 };
