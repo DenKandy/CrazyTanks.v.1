@@ -21,7 +21,7 @@ bool Point::operator == ( const Point &points ) {
 	return ( X == points.X && Y == points.Y );
 }
 char Point::getChar() {
-	char c = '\0';
+	char c = END_STR;
 	CONSOLE_SCREEN_BUFFER_INFO con;
 	HANDLE hcon = GetStdHandle( STD_OUTPUT_HANDLE );
 	moveCursor();
@@ -29,7 +29,7 @@ char Point::getChar() {
 	{
 		DWORD read = 0;
 		if ( !ReadConsoleOutputCharacterA( hcon, &c, 1, con.dwCursorPosition, &read ) || read != 1 ) {
-			c = '\0';
+			c = END_STR;
 		}
 
 	}

@@ -9,6 +9,7 @@
 #include <Windows.h>
 #include <mutex>
 
+
 using namespace std;
 Game::Game( Map map ) : map( map )
 {
@@ -42,7 +43,7 @@ void Game::finish()
 }
 
 void Game::control_player_tank()
-{		
+{
 		auto last_pos_player = map.player.position;
 		Bullet player_ballet;
 		
@@ -120,24 +121,27 @@ void Game::control_fly_bullet()
 }
 void Game::showScoreboard()
 {
-	auto points = Point( 2, 2 );
+	auto points = Point( POS_HEALTH, POS_HEALTH );
 	points.moveCursor();
 	cout << "health: " << map.player.health;
-	points.X = 13;
+	points.X = POS_SCORE;
 	points.moveCursor();
 	cout << "score: " << score;
-	points.X = 23;
+	points.X = POS_TIME;
 	points.moveCursor();
 	cout << "time: ";
-	points.X = 53;
+	points.X = POS_HELP;
 	points.moveCursor();
 	cout << "- @ tank of player";
+	//turn new line
 	points.Y = 3;
 	points.moveCursor();
 	cout << "- % tank of enemy";
+	//turn new line
 	points.Y = 4;
 	points.moveCursor();
 	cout << "- * bullets";
+	//turn new line
 	points.Y = 5;
 	points.moveCursor();
 	cout << "- ~ gold";
@@ -146,18 +150,16 @@ void Game::showScoreboard()
 void Game::updateScoreboard()
 {
 	seconds = ( ( clock() - timeGame ) / CLOCKS_PER_SEC );
-	int hour = seconds / 3600;
-	minutes = ( seconds - ( hour * 3600 ) ) / 60;
-	seconds = seconds - ( hour * 3600 ) - ( minutes * 60 );
-	auto points = Point( 2, 10 );
+	int hour = seconds / SECOND_IN_HOUR;
+	minutes = ( seconds - ( hour * SECOND_IN_HOUR ) ) / SECOND_IN_MINUTE;
+	seconds = seconds - ( hour * SECOND_IN_HOUR ) - ( minutes * SECOND_IN_MINUTE );
+	auto points = Point( POS_HEALTH, POS_CHANGE_HEALTH );
 	points.moveCursor();
 	cout << map.player.health;
-	points.X = 20;
+	points.X = POS_CHANGE_SCORE;
 	points.moveCursor();
 	cout << score;
-	points.X = 30;
+	points.X = POS_CHANGE_TIME;
 	points.moveCursor();
 	cout << minutes << ":" << seconds << " ";
-	points.X = 34;
-	points.setChar( ' ' );
 }

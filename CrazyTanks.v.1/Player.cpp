@@ -28,28 +28,28 @@ void Player::move( Player& player )
 		ev = _getch();
 		switch ( ev )
 		{
-		case 72:
+		case GO_UP:
 			if ( canMove( UP ) )
 			{
 				player.position.Y = position.Y - 1;
 				dir = UP;
 			}
 			break;
-		case 80:
+		case GO_DOWN:
 			if ( canMove( DOWN ) )
 			{
 				player.position.Y = position.Y + 1;
 				dir = DOWN;
 			}
 			break;
-		case 75:
+		case GO_LEFT:
 			if ( canMove( LEFT ) )
 			{
 				player.position.X = position.X - 1;
 				dir = LEFT;
 			}
 			break;
-		case 77:
+		case GO_RIGHT:
 			if ( canMove( RIGHT ) )
 			{
 				player.position.X = position.X + 1;
@@ -126,7 +126,7 @@ void Player::shoot( Bullet& bullet )
 	{
 		ev = _getch();
 
-		if ( ev == 32 ) 
+		if ( ev == SHOOT ) 
 		{
 			bullet.position = position;
 			switch ( dir )

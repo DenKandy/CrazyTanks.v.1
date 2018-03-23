@@ -15,8 +15,6 @@
 class Map
 {
 public:
-	const char gold = '~';
-	const char border = '=';
 	Point position_gold;
 	Point height;
 	Point width;

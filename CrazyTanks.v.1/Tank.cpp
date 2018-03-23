@@ -53,7 +53,7 @@ void Tank::move(Tank& tank)
 }
 void Tank::shoot( Bullet& bullet ) 
 {
-	bullet = Bullet( position, '*', dir, '%' );
+	bullet = Bullet( position, BULLET, dir, ENEMY );
 	bullet.move( bullet, bullet.position );
 }
 void Tank::destroy() {
@@ -69,7 +69,7 @@ bool Tank::canMove( Direction dir )
 		if ( !isBlock( pos ) ) {
 			can = true;
 		}
-		else if ( pos.getChar() == '*' ) {
+		else if ( pos.getChar() == BULLET ) {
 			can = true;
 			destroy();
 		}
@@ -79,7 +79,7 @@ bool Tank::canMove( Direction dir )
 		if ( !isBlock( pos ) ) {
 			can = true;
 		}
-		else if ( pos.getChar() == '*' ) {
+		else if ( pos.getChar() == BULLET ) {
 			can = true;
 			destroy();
 		}
@@ -89,7 +89,7 @@ bool Tank::canMove( Direction dir )
 		if ( !isBlock( pos ) ) {
 			can = true;
 		}
-		else if ( pos.getChar() == '*' ) {
+		else if ( pos.getChar() == BULLET ) {
 			can = true;
 			destroy();
 		}
@@ -99,7 +99,7 @@ bool Tank::canMove( Direction dir )
 		if ( !isBlock( pos ) ) {
 			can = true;
 		}
-		else if ( pos.getChar() == '*' ) {
+		else if ( pos.getChar() == BULLET ) {
 			can = true;
 			destroy();
 		}
@@ -109,5 +109,5 @@ bool Tank::canMove( Direction dir )
 }
 bool Tank::isBlock( Point pos )
 {
-	return ( pos.getChar() == '-' || pos.getChar() == '%' || pos.getChar() == '@' || pos.getChar() == '|' || pos.getChar() == '#' );
+	return ( pos.getChar() == UP_DOWN_BORDER || pos.getChar() == ENEMY || pos.getChar() == PLAYER || pos.getChar() == LEFT_RIGHT_BORDER || pos.getChar() == WALL );
 }

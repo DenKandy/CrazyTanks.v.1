@@ -16,12 +16,12 @@ Bullet::Bullet( Point position, char sign, Direction dir, char who ) : position(
 Bullet::~Bullet(){}
 bool Bullet::isBlock( Point& pos )
 {
-	return ( pos.getChar() == '-' || pos.getChar() == who || pos.getChar() == '|');
+	return ( pos.getChar() == UP_DOWN_BORDER || pos.getChar() == who || pos.getChar() == LEFT_RIGHT_BORDER);
 }
 bool Bullet::isDestroy( Point& pos )
 {
-	 char dest = who == '@' ? '%' : '@';
-	return ( pos.getChar() == '#' || pos.getChar() == dest || pos.getChar() == '~' );
+	 char dest = who == PLAYER ? ENEMY : PLAYER;
+	return ( pos.getChar() == WALL || pos.getChar() == dest || pos.getChar() == GOLD );
 }
 void Bullet::move( Bullet& bullet, Point& pos )
 {
