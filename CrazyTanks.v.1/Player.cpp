@@ -128,23 +128,9 @@ void Player::shoot( Bullet& bullet )
 
 		if ( ev == SHOOT ) 
 		{
-			bullet.position = position;
-			switch ( dir )
-			{
-			case UP:
-				bullet.position.Y = position.Y - 1;
-				break;
-			case DOWN:
-				bullet.position.Y = position.Y + 1;
-				break;
-			case LEFT:
-				bullet.position.X = position.X - 1;
-				break;
-			case RIGHT:
-				bullet.position.X = position.X + 1;
-				break;
-			}
-			bullet = Bullet( bullet.position, '*',  dir, '@' );
+			bullet = Bullet( position, BULLET, dir, PLAYER );
+			bullet.move( bullet, bullet.position );
+			//bullet = Bullet( bullet.position, '*',  dir, '@' );
 
 		}
 	}
