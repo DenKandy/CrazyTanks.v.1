@@ -3,20 +3,21 @@
 #define BULLET_H
 
 #include "Point.h"
-
 class Bullet {
 public:
 	char sign;
-	char type;
+	char who;
 	Direction dir;
 	Point position;
 
 	Bullet();
-	Bullet( Point position, char sign, Direction dir, char type );
+	Bullet( Point position, char sign, Direction dir, char who );
 	~Bullet();
-	bool isBlock();
-	void move();
+	void move( Bullet& bullet, Point& pos );
+private:
 	void destroy();
+	bool isBlock( Point& pos );
+	bool isDestroy( Point& pos );
 
 };
 #endif // !BULLET_H

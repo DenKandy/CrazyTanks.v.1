@@ -1,8 +1,10 @@
 #include "stdafx.h"
-#include <iostream>
-#include <Windows.h>
-
 #include "Point.h"
+
+
+#include <windows.h>
+#include <iostream>
+
 Point::Point()
 {
 	X = 0;

@@ -3,7 +3,9 @@
 #include "Player.h"
 #include "Bullet.h"
 
+
 #include <conio.h>
+
 
 Player::Player()
 {
@@ -30,24 +32,28 @@ void Player::move( Player& player )
 			if ( canMove( UP ) )
 			{
 				player.position.Y = position.Y - 1;
+				dir = UP;
 			}
 			break;
 		case 80:
 			if ( canMove( DOWN ) )
 			{
 				player.position.Y = position.Y + 1;
+				dir = DOWN;
 			}
 			break;
 		case 75:
 			if ( canMove( LEFT ) )
 			{
 				player.position.X = position.X - 1;
+				dir = LEFT;
 			}
 			break;
 		case 77:
 			if ( canMove( RIGHT ) )
 			{
 				player.position.X = position.X + 1;
+				dir = RIGHT;
 			}
 			break;
 		}
@@ -66,7 +72,7 @@ bool Player::canMove( Direction dir )
 		}
 		else if ( pos.getChar() == '+' ) {
 			can = true;
-			damage();
+			tryDamage();
 		}
 		break;
 	case DOWN:
@@ -76,7 +82,7 @@ bool Player::canMove( Direction dir )
 		}
 		else if ( pos.getChar() == '+' ) {
 			can = true;
-			damage();
+			tryDamage();
 		}
 		break;
 	case LEFT:
@@ -86,7 +92,7 @@ bool Player::canMove( Direction dir )
 		}
 		else if ( pos.getChar() == '+' ) {
 			can = true;
-			damage();
+			tryDamage();
 		}
 		break;
 	case RIGHT:
@@ -96,24 +102,25 @@ bool Player::canMove( Direction dir )
 		}
 		else if ( pos.getChar() == '+' ) {
 			can = true;
-			damage();
+			tryDamage();
 		}
 		break;
 	}
 	return can;
 }
 
-void Player::damage()
+bool Player::tryDamage()
 {
 	--health;
 	if ( health == 0 )
 	{
 		position = Point();
+		return false;
 	}
+	return true;
 }
-Bullet Player::shoot()
+void Player::shoot( Bullet& bullet )
 {
-	Bullet bullet;
 	int ev = 0;
 	if ( _kbhit() != 0 )
 	{
@@ -121,12 +128,26 @@ Bullet Player::shoot()
 
 		if ( ev == 32 ) 
 		{
-			bullet = Bullet( position, '*',  dir, '@' );
-			bullet.move();
+			bullet.position = position;
+			switch ( dir )
+			{
+			case UP:
+				bullet.position.Y = position.Y - 1;
+				break;
+			case DOWN:
+				bullet.position.Y = position.Y + 1;
+				break;
+			case LEFT:
+				bullet.position.X = position.X - 1;
+				break;
+			case RIGHT:
+				bullet.position.X = position.X + 1;
+				break;
+			}
+			bullet = Bullet( bullet.position, '*',  dir, '@' );
+
 		}
 	}
-
-	return bullet;
 }
 bool Player::isBlock(Point pos)
 {

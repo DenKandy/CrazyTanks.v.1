@@ -14,7 +14,16 @@ Wall::~Wall()
 {
 }
 
-void Wall::destroy()
+bool Wall::tryDestroy( Wall&  wall )
 {
+	wall.health = wall.health - 1;
+	if ( wall.health == 0 )
+	{
+		position = Point();
+		return false;
+	}
+	return true;
 }
+
+
 

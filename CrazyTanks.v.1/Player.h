@@ -18,8 +18,8 @@ public:
 	~Player();
 	void move( Player& player );
 	bool canMove( Direction dir );
-	void damage();
-	Bullet shoot();
+	bool tryDamage();
+	void shoot( Bullet& bullet );
 private:
 	bool isBlock(Point pos);
 

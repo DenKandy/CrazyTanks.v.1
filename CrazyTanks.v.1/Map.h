@@ -11,6 +11,7 @@
 #include <vector>
 #include <list>
 
+
 class Map
 {
 public:
@@ -19,18 +20,15 @@ public:
 	Point position_gold;
 	Point height;
 	Point width;
-	std::list<Tank> tanks;
+	std::vector<Tank> tanks;
 	Player player;
-	std::list<Bullet> bullet_tank;
-	std::list<Bullet> bullet_player;
-	std::list<Wall> walls;
+	std::vector<Bullet> bullets;
+	std::vector<Wall> walls;
 
 	Map( Point height, Point width );
 	~Map();
 	void draw();
-	void update( Player& player, Point last_pos );
-	void update( Tank& tank, Point last_pos );
-	void update( Wall& wall, Point last_pos );
+	void update( Point& player, Point last_pos, char sign );
 
 
 private:

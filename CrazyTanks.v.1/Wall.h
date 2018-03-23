@@ -13,6 +13,7 @@ public:
 	Wall();
 	Wall( Point position, char sign, int health );
 	~Wall();
-	void destroy();
+	bool tryDestroy( Wall& wall );
+	
 };
 #endif //WALL_H

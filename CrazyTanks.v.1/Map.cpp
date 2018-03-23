@@ -5,9 +5,17 @@
 #include "Tank.h"
 #include "Map.h"
 
+//#include <iostream>
+//#include <cstdlib>
+//#include <windows.h>
+//#include <time.h>
+//#include <fstream>
+//#include <conio.h>
 #include <vector>
 #include <list>
-#include <time.h>
+
+//#include <thread>
+//#include <mutex>
 
 Map::Map( Point height, Point width ) : height( height ), width( width )
 {
@@ -67,7 +75,7 @@ Map::~Map()
 	 //draw tank of player
 	 player.position.setChar( player.sign );
 	 //draw walls
-	 for ( int i = 0; i < 5 * 3; i++ )
+	 for ( int i = 0; i < 5 * 10; i++ )
 	 {
 		 Point points;
 		 do
@@ -181,14 +189,9 @@ Map::~Map()
 	 }
 	 
 }
- void Map::update( Player& player, Point last_pos )
+ void Map::update( Point& position, Point last_pos, char sign )
 {
 	 last_pos.setChar( ' ' );
-	 player.position.setChar( player.sign );
+	 position.setChar( sign );
+	 Point().setChar( ' ' );
 }
- void Map::update( Wall& wall, Point last_pos )
- {
- }
- void Map::update( Tank& tank, Point last_pos )
- {
- }
