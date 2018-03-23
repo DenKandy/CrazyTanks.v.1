@@ -20,7 +20,8 @@ bool Bullet::isBlock( Point& pos )
 }
 bool Bullet::isDestroy( Point& pos )
 {
-	return ( pos.getChar() == '#' || pos.getChar() == '@' || pos.getChar() == '~' );
+	 char dest = who == '@' ? '%' : '@';
+	return ( pos.getChar() == '#' || pos.getChar() == dest || pos.getChar() == '~' );
 }
 void Bullet::move( Bullet& bullet, Point& pos )
 {

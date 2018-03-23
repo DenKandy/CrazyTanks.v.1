@@ -27,22 +27,6 @@ void Game::start()
 	//draw map
 	srand( time( 0 ) );
 	map.draw();
-	Bullet bullet;
-	while ( true )
-	{
-		for ( size_t i = 0; i < map.tanks.size(); i++ )
-		{
-			auto last_pos_tank = map.tanks[i].position;
-			map.tanks[i].move( map.tanks[i] );
-			map.update( map.tanks[i].position, last_pos_tank, map.tanks[i].sign );
-
-			map.tanks[i].shoot( bullet );
-			map.bullets.push_back( bullet );
-
-		}
-		Sleep( 500 )
-			;
-	}
 }
 
 void Game::finish()
@@ -75,17 +59,20 @@ void Game::control_player_tank()
 void Game::control_enemy_tank()
 {		
 	Bullet bullet;
-		for ( size_t i = 0; i < map.tanks.size(); i++ )
+	for ( size_t i = 0; i < map.tanks.size(); i++ )
+	{
+		if ( map.tanks[i].position == Point() )
 		{
-			auto last_pos_tank = map.tanks[i].position;
-			map.tanks[i].move( map.tanks[i] );
-			map.update( map.tanks[i].position, last_pos_tank, map.tanks[i].sign );
-			
-				map.tanks[i].shoot( bullet );
-				map.bullets.push_back( bullet );
-			
+			continue;
 		}
-		updateScoreboard();
+		auto last_pos_tank = map.tanks[i].position;
+		map.tanks[i].move( map.tanks[i] );
+		map.update( map.tanks[i].position, last_pos_tank, map.tanks[i].sign );
+
+		map.tanks[i].shoot( bullet );
+		map.bullets.push_back( bullet );
+
+	}		updateScoreboard();
 }
 void Game::control_fly_bullet()
 {
@@ -100,9 +87,8 @@ void Game::control_fly_bullet()
 		map.bullets[i].move( map.bullets[i], pos );
 		if ( !( pos == Point() ) )
 		{
-			if ( pos == map.bullets[i].position ) {
+			if ( pos == map.player.position ) {
 				goon = map.player.tryDamage();
-				break;
 			}
 			else if ( pos == map.position_gold ) {
 				goon = false;
@@ -116,6 +102,16 @@ void Game::control_fly_bullet()
 						pos.setChar( ' ' );
 					}
 					break;
+				}
+			}
+			for ( size_t i = 0; i < map.tanks.size(); i++ )
+			{
+				if ( pos == map.tanks[i].position ) {
+
+					map.tanks[i].position = Point();
+					pos.setChar( ' ' );
+
+					score += 10;
 				}
 			}
 		}

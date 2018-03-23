@@ -20,44 +20,41 @@ Tank::~Tank() {
 }
 void Tank::move(Tank& tank) 
 {
+	if ( position == Point() )
+	{
+		return;
+	}
 	int times = 0;
 	do
 	{
 		dir = static_cast< Direction >( rand() % 4 );
-		times++;
-		if ( times > 3 ) {
-			times = 0;
-			return;
-		}
-
 	} while ( !canMove( dir ) );
 	switch ( dir )
 	{
 	case UP:
-		tank.position.Y = tank.position.Y - 1;
+		tank.position.Y = position.Y - 1;
 		dir = UP;
 		break;
 	case DOWN:
-		tank.position.Y = tank.position.Y + 1;
+		tank.position.Y = position.Y + 1;
 		dir = DOWN;
 		break;
 	case LEFT:
-		tank.position.X = tank.position.X - 1;
+		tank.position.X = position.X - 1;
 		dir = LEFT;
 		break;
 	case RIGHT:
-		tank.position.X = tank.position.X + 1;
+		tank.position.X = position.X + 1;
 		dir = RIGHT;
 		break;
+	case STOP:
+		dir = STOP;
 	}
 }
 void Tank::shoot( Bullet& bullet ) 
 {
-	bullet.position = position;
-	bullet.dir = dir;
-	bullet.move( bullet, position );
-
-	bullet = Bullet( bullet.position, '*', dir, '%' );
+	bullet = Bullet( position, '*', dir, '%' );
+	bullet.move( bullet, bullet.position );
 }
 void Tank::destroy() {
 

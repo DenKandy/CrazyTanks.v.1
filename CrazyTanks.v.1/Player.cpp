@@ -111,7 +111,7 @@ bool Player::canMove( Direction dir )
 
 bool Player::tryDamage()
 {
-	--health;
+	health = health - 1;
 	if ( health == 0 )
 	{
 		position = Point();
