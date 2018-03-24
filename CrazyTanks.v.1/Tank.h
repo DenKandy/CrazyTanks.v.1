@@ -4,20 +4,16 @@
 
 #include "Point.h"
 #include "Bullet.h"
+#include "Player.h"
 
-class Tank {
+
+class Tank: public Player {
 public:
-	char sign;
-	Direction dir;
-	Point position;
 	Tank();
-	Tank( Point position, char sign );
+	Tank( Point position, char sign, int health );
 	~Tank();
-	void move( Tank& tank );
-	void shoot( Bullet& bullet );
-	void destroy();
+	void action( Tank& tank, Bullet& bullet );
 private:
-	bool isBlock( Point pos );
-	bool canMove( Direction dir );
+	void move( Tank& tank );
 };
 #endif // TANK_H

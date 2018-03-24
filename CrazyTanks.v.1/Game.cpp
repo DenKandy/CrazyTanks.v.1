@@ -9,6 +9,7 @@
 #include <Windows.h>
 #include <mutex>
 
+#include <conio.h>
 
 using namespace std;
 Game::Game( Map map ) : map( map )
@@ -45,11 +46,13 @@ void Game::finish()
 void Game::control_player_tank()
 {
 		auto last_pos_player = map.player.position;
-		Bullet player_ballet;
+		Bullet bullet;
 		
-		map.player.move( map.player );
-		map.player.shoot( player_ballet );
-		map.bullets.push_back( player_ballet );
+		goon = map.player.tryAction( map.player, bullet );
+		if ( !( bullet.position == Point() ) )
+		{
+			map.bullets.push_back( bullet );
+		}
 		if ( !( map.player.position == last_pos_player ) )
 		{
 			map.update( map.player.position, last_pos_player, map.player.sign );
@@ -67,13 +70,14 @@ void Game::control_enemy_tank()
 			continue;
 		}
 		auto last_pos_tank = map.tanks[i].position;
-		map.tanks[i].move( map.tanks[i] );
+
+		map.tanks[i].action( map.tanks[i], bullet );
+		map.bullets.push_back( bullet );
 		map.update( map.tanks[i].position, last_pos_tank, map.tanks[i].sign );
 
-		map.tanks[i].shoot( bullet );
-		map.bullets.push_back( bullet );
 
-	}		updateScoreboard();
+	}	
+		updateScoreboard();
 }
 void Game::control_fly_bullet()
 {
@@ -110,7 +114,7 @@ void Game::control_fly_bullet()
 				if ( pos == map.tanks[i].position ) {
 
 					map.tanks[i].position = Point();
-					pos.setChar( ' ' );
+					pos.setChar( FIELD );
 
 					score += 10;
 				}

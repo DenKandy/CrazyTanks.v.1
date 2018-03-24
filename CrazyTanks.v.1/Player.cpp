@@ -15,12 +15,11 @@ Player::Player()
 Player::Player( Point position, char sign, int health ) : position( position ), sign( sign ), health( health )
 {
 }
-
-Player::~Player()
+ Player::~Player()
 {
 }
 
-void Player::move( Player& player )
+bool Player::tryAction( Player& player, Bullet& bullet )
 {
 	int ev = 0;
 	if ( _kbhit() != 0 )
@@ -29,35 +28,57 @@ void Player::move( Player& player )
 		switch ( ev )
 		{
 		case GO_UP:
-			if ( canMove( UP ) )
-			{
-				player.position.Y = position.Y - 1;
-				dir = UP;
-			}
+			move( player, UP );
 			break;
 		case GO_DOWN:
-			if ( canMove( DOWN ) )
-			{
-				player.position.Y = position.Y + 1;
-				dir = DOWN;
-			}
+			move( player, DOWN );
 			break;
 		case GO_LEFT:
-			if ( canMove( LEFT ) )
-			{
-				player.position.X = position.X - 1;
-				dir = LEFT;
-			}
-			break;
+			move( player, LEFT );
+				break;
 		case GO_RIGHT:
-			if ( canMove( RIGHT ) )
-			{
-				player.position.X = position.X + 1;
-				dir = RIGHT;
-			}
+			move( player, RIGHT );
+			break;
+		case SHOOT:
+			shoot( bullet, PLAYER );
+		case EXIT:
+			return false;
 			break;
 		}
 	}
+	return true;
+}
+
+void Player::move( Player& player, Direction dir )
+{
+		switch ( dir )
+		{
+		case UP:
+			if ( canMove( dir ) )
+			{
+				player.position.Y = position.Y - 1;
+			}
+			break;
+		case DOWN:
+			if ( canMove( dir ) )
+			{
+				player.position.Y = position.Y + 1;
+			}
+			break;
+		case LEFT:
+			if ( canMove( dir ) )
+			{
+				player.position.X = position.X - 1;
+			}
+			break;
+		case RIGHT:
+			if ( canMove( dir ) )
+			{
+				player.position.X = position.X + 1;
+			}
+			break;
+		}
+		this->dir = dir;
 }
 
 bool Player::canMove( Direction dir )
@@ -70,19 +91,11 @@ bool Player::canMove( Direction dir )
 		if ( !isBlock(pos) ) {
 			can = true;
 		}
-		else if ( pos.getChar() == '+' ) {
-			can = true;
-			tryDamage();
-		}
 		break;
 	case DOWN:
 		pos = Point( position.Y + 1, position.X );
 		if ( !isBlock(pos) ) {
 			can = true;
-		}
-		else if ( pos.getChar() == '+' ) {
-			can = true;
-			tryDamage();
 		}
 		break;
 	case LEFT:
@@ -90,19 +103,11 @@ bool Player::canMove( Direction dir )
 		if ( !isBlock(pos) ) {
 			can = true;
 		}
-		else if ( pos.getChar() == '+' ) {
-			can = true;
-			tryDamage();
-		}
 		break;
 	case RIGHT:
 		pos = Point( position.Y, position.X + 1 );
 		if ( !isBlock(pos) ) {
 			can = true;
-		}
-		else if ( pos.getChar() == '+' ) {
-			can = true;
-			tryDamage();
 		}
 		break;
 	}
@@ -119,23 +124,12 @@ bool Player::tryDamage()
 	}
 	return true;
 }
-void Player::shoot( Bullet& bullet )
+void Player::shoot( Bullet& bullet, const char who )
 {
-	int ev = 0;
-	if ( _kbhit() != 0 )
-	{
-		ev = _getch();
-
-		if ( ev == SHOOT ) 
-		{
-			bullet = Bullet( position, BULLET, dir, PLAYER );
-			bullet.move( bullet, bullet.position );
-			//bullet = Bullet( bullet.position, '*',  dir, '@' );
-
-		}
-	}
+		bullet = Bullet( position, BULLET, dir, who );
+		bullet.move( bullet, bullet.position );
 }
 bool Player::isBlock(Point pos)
 {
-	return ( pos.getChar() == '-' || pos.getChar() == '%' || pos.getChar() == '|' || pos.getChar() == '#');
+	return ( pos.getChar() == UP_DOWN_BORDER || pos.getChar() == ENEMY || pos.getChar() == PLAYER || pos.getChar() == LEFT_RIGHT_BORDER || pos.getChar() == WALL );
 }

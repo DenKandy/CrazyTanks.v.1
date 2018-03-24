@@ -15,14 +15,16 @@ public:
 
 	Player();
 	Player( Point position, char sign, int health );
-	~Player();
-	void move( Player& player );
-	bool canMove( Direction dir );
+	virtual ~Player();
+	bool tryAction( Player& player, Bullet& bullet );
 	bool tryDamage();
-	void shoot( Bullet& bullet );
 private:
-	bool isBlock(Point pos);
-
+	void move( Player& player, Direction dir );
+	
+protected:
+	bool isBlock( Point pos );
+	bool canMove( Direction dir );
+	void shoot( Bullet& bullet, const char who );
 };
 #endif //PLAYER_H
 

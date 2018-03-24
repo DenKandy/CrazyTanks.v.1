@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "Player.h"
 #include "Tank.h"
 #include "Point.h"
 #include "Bullet.h"
@@ -7,16 +8,19 @@
 #include <windows.h>
 #include <time.h>
 
-
-Tank::Tank()
-{
-	position = Point();
-}
-Tank::Tank( Point position, char sign ) : position( position ), sign(sign) {
-
-}
+Tank::Tank():Player(){}
+Tank::Tank( Point position, char sign, int health ) :Player(position, sign, health) {}
 Tank::~Tank() {
 
+}
+void Tank::action( Tank & tank, Bullet & bullet )
+{
+	auto last_pos = tank.position;
+	tank.move( tank );
+	if ( !(last_pos == tank.position) )
+	{
+		tank.shoot( bullet, ENEMY );
+	}
 }
 void Tank::move(Tank& tank) 
 {
@@ -51,63 +55,4 @@ void Tank::move(Tank& tank)
 		dir = STOP;
 	}
 }
-void Tank::shoot( Bullet& bullet ) 
-{
-	bullet = Bullet( position, BULLET, dir, ENEMY );
-	bullet.move( bullet, bullet.position );
-}
-void Tank::destroy() {
 
-}
-bool Tank::canMove( Direction dir )
-{
-	bool can = false; Point pos;
-	switch ( dir )
-	{
-	case UP:
-		pos = Point( position.Y - 1, position.X );
-		if ( !isBlock( pos ) ) {
-			can = true;
-		}
-		else if ( pos.getChar() == BULLET ) {
-			can = true;
-			destroy();
-		}
-		break;
-	case DOWN:
-		pos = Point( position.Y + 1, position.X );
-		if ( !isBlock( pos ) ) {
-			can = true;
-		}
-		else if ( pos.getChar() == BULLET ) {
-			can = true;
-			destroy();
-		}
-		break;
-	case LEFT:
-		pos = Point( position.Y, position.X - 1 );
-		if ( !isBlock( pos ) ) {
-			can = true;
-		}
-		else if ( pos.getChar() == BULLET ) {
-			can = true;
-			destroy();
-		}
-		break;
-	case RIGHT:
-		pos = Point( position.Y, position.X + 1 );
-		if ( !isBlock( pos ) ) {
-			can = true;
-		}
-		else if ( pos.getChar() == BULLET ) {
-			can = true;
-			destroy();
-		}
-		break;
-	}
-	return can;
-}
-bool Tank::isBlock( Point pos )
-{
-	return ( pos.getChar() == UP_DOWN_BORDER || pos.getChar() == ENEMY || pos.getChar() == PLAYER || pos.getChar() == LEFT_RIGHT_BORDER || pos.getChar() == WALL );
-}

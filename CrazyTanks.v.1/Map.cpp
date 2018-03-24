@@ -21,7 +21,7 @@ Map::Map( Point height, Point width ) : height( height ), width( width )
 {
 	position_gold = Point( height.X - 2, width.X / 2 );
 	
-	player = Player( Point( height.X - 2, width.X / 2 - 3 ), PLAYER, START_HEALTH );
+	player = Player( Point( height.X - 2, width.X / 2 - 3 ), PLAYER, START_PLAYER_HEALTH );
 }
 
 Map::~Map()
@@ -55,23 +55,23 @@ Map::~Map()
 	 //turn to right
 	 castle = Point( position_gold.Y, position_gold.X + 1 );
 	 castle.setChar( WALL );
-	 walls.push_back( Wall( castle, WALL, START_HEALTH ) );
+	 walls.push_back( Wall( castle, WALL, START_WALL_HEALTH ) );
 	 //turn to left
 	 castle = Point( position_gold.Y, position_gold.X - 1 );
 	 castle.setChar( WALL );
-	 walls.push_back( Wall( castle, WALL, START_HEALTH ) );
+	 walls.push_back( Wall( castle, WALL, START_WALL_HEALTH ) );
 	 //turn to up
 	 castle = Point( position_gold.Y - 1, position_gold.X );
 	 castle.setChar( WALL );
-	 walls.push_back( Wall( castle, WALL, START_HEALTH ) );
+	 walls.push_back( Wall( castle, WALL, START_WALL_HEALTH ) );
 	 //turn to up-rigth
 	 castle = Point( position_gold.Y - 1, position_gold.X + 1 );
 	 castle.setChar( WALL );
-	 walls.push_back( Wall( castle, WALL, START_HEALTH ) );
+	 walls.push_back( Wall( castle, WALL, START_WALL_HEALTH ) );
 	 //turn to up-left
 	 castle = Point( position_gold.Y - 1, position_gold.X - 1 );
 	 castle.setChar( WALL );
-	 walls.push_back( Wall( castle, WALL, START_HEALTH ) );
+	 walls.push_back( Wall( castle, WALL, START_WALL_HEALTH ) );
 	 //draw tank of player
 	 player.position.setChar( player.sign );
 	 //draw walls
@@ -85,7 +85,7 @@ Map::~Map()
 
 		 } while ( points.X <= width.Y || points.Y <= height.Y || points == position_gold || points == player.position );
 
-		 auto wall = Wall( points, WALL, START_HEALTH );
+		 auto wall = Wall( points, WALL, START_WALL_HEALTH );
 		 wall.position.setChar( wall.sign );
 		 walls.push_back( wall );
 		 
@@ -147,7 +147,7 @@ Map::~Map()
 			 }
 			 if ( !has )
 			 {
-				 auto wall = Wall( points, WALL, START_HEALTH );
+				 auto wall = Wall( points, WALL, START_WALL_HEALTH  );
 				 wall.position.setChar( wall.sign );
 				 walls.push_back( wall );
 			 }
@@ -156,7 +156,7 @@ Map::~Map()
 	 //draw tanks
 	 for ( size_t i = 0; i < COUNT_TANKS; i++ )
 	 {    
-		 Tank tank = Tank( Point(), ENEMY ); bool hasWall, hasTank;
+		 Tank tank = Tank( Point(), ENEMY, START_ENEMY_HEALTH ); bool hasWall, hasTank;
 		 do {
 			 hasWall = false;
 			 hasTank = false;
