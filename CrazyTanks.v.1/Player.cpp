@@ -41,6 +41,7 @@ bool Player::tryAction( Player& player, Bullet& bullet )
 			break;
 		case SHOOT:
 			shoot( bullet, PLAYER );
+			break;
 		case EXIT:
 			return false;
 			break;
