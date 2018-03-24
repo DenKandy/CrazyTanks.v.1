@@ -14,7 +14,7 @@ public:
 	clock_t timeGame;
 	Map map;
 
-	Game( Map map );
+	Game();
 	~Game();
 	void start();
 	void finish();

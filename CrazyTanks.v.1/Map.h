@@ -22,7 +22,7 @@ public:
 	Player player;
 	std::vector<Bullet> bullets;
 	std::vector<Wall> walls;
-
+	Map();
 	Map( Point height, Point width );
 	~Map();
 	void draw();

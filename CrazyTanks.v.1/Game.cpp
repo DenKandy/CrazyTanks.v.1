@@ -12,8 +12,9 @@
 #include <conio.h>
 
 using namespace std;
-Game::Game( Map map ) : map( map )
+Game::Game()
 {
+	map = Map( Point( MIN_HEIGHT, MAX_HEIGHT ), Point( MIN_WIDTH, MAX_WIDHT ) );
 	timeGame = clock();
 	goon = true;
 }
@@ -41,6 +42,7 @@ void Game::finish()
 	else {
 		cout << "Game over !!!";
 	}
+	system( "pause" );
 }
 
 void Game::control_player_tank()
@@ -62,12 +64,13 @@ void Game::control_player_tank()
 
 void Game::control_enemy_tank()
 {		
-	Bullet bullet;
+	Bullet bullet; int count_kill_tanks = 0;
 	for ( size_t i = 0; i < map.tanks.size(); i++ )
 	{
 		if ( map.tanks[i].position == Point() )
 		{
 			continue;
+			count_kill_tanks++;
 		}
 		auto last_pos_tank = map.tanks[i].position;
 
@@ -78,6 +81,15 @@ void Game::control_enemy_tank()
 
 	}	
 		updateScoreboard();
+		
+		if ( count_kill_tanks == COUNT_TANKS )
+		{
+			goon = false;
+		}
+		else 
+		{
+			count_kill_tanks = 0;
+		}
 }
 void Game::control_fly_bullet()
 {

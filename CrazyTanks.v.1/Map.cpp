@@ -16,7 +16,7 @@
 
 //#include <thread>
 //#include <mutex>
-
+Map::Map(){}
 Map::Map( Point height, Point width ) : height( height ), width( width )
 {
 	position_gold = Point( height.X - 2, width.X / 2 );
